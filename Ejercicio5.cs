@@ -3,7 +3,7 @@
     static void Main(string[] args)
     {
         Console.WriteLine("Calculadora de Operaciones");
-        Console.Write("Ingrese el primer número: ");
+        Console.Write("\nIngrese el primer número: ");
         double num1 = Convert.ToDouble(Console.ReadLine());
 
         Console.Write("Ingrese el segundo número: ");
@@ -13,7 +13,7 @@
         char clave = Console.ReadKey().KeyChar;
         Console.WriteLine(); // Salto de línea
 
-        double resultado = 0;
+        double resultado = 0, resultado2 = 0;
 
         switch (clave)
         {
@@ -34,6 +34,7 @@
                 break;
             case 'R':
                 resultado = Math.Sqrt(num1);
+                resultado2 = Math.Sqrt(num2);
                 break;
             case 'E':
                 resultado = Math.Pow(num1, num2);
@@ -44,8 +45,10 @@
                 break;
         }
 
-        if (clave != '/')
-            Console.WriteLine($"Resultado: {resultado}");
+        if (resultado2 != 0)
+            Console.WriteLine("Resultado 1: " + resultado + "\nResultado 2: " + resultado2);
+        else
+            Console.WriteLine($"\nResultado: {resultado}");
 
         Console.WriteLine("Presione cualquier tecla para salir...");
         Console.ReadKey();
