@@ -1,51 +1,82 @@
-try
+bool continuar = true;
+
+while (continuar)
 {
-    Console.WriteLine("Ingrese el año inicial:");
-    int anioInicial = Convert.ToInt32(Console.ReadLine());
+    Console.WriteLine("Programa para encontrar años bisiestos en un rango dado.");
 
-    Console.WriteLine("Ingrese el año final:");
-    int anioFinal = Convert.ToInt32(Console.ReadLine());
+    int anioInicio = SolicitarAnio("\nIngrese el año de inicio del rango: ");
+    int anioFin = SolicitarAnio("Ingrese el año de fin del rango: ");
 
-    if (anioFinal < anioInicial)
+    if (anioInicio > anioFin)
     {
-        Console.WriteLine("Error: el año final debe ser mayor o igual que el año inicial.");
-        return;
+        Console.WriteLine("\nEl año de inicio no puede ser mayor que el año de fin.");
     }
-
-    Console.WriteLine("\nAños bisiestos entre " + anioInicial + " y " + anioFinal + ":");
-
-    for (int anio = anioInicial; anio <= anioFinal; anio++)
+    else
     {
-        if (EsBisiesto(anio))
+        Console.WriteLine($"\nAños bisiestos entre {anioInicio} y {anioFin}:");
+
+        for (int anio = anioInicio; anio <= anioFin; anio++)
         {
-            Console.WriteLine(anio);
+            if (EsBisiesto(anio))
+            {
+                Console.WriteLine(anio);
+            }
         }
     }
-}
-catch (FormatException)
-{
-    Console.WriteLine("Error, debe ingresar un número válido.");
-}
-catch (Exception ex)
-{
-    Console.WriteLine("Ocurrió un error: " + ex.Message);
+
+    continuar = DeseaContinuar();
 }
 
 static bool EsBisiesto(int anio)
 {
-    if (anio % 4 == 0)
+    // Verifica si un año es bisiesto
+    if ((anio % 4 == 0 && anio % 100 != 0) || (anio % 400 == 0))
     {
-        if (anio % 100 == 0)
-        {
-            if (anio % 400 == 0)
-            {
-                return true; // Es bisiesto
-            }
-            return false; // No es bisiesto
-        }
-        return true; // Es bisiesto
+        return true;
     }
-    return false; // No es bisiesto
+    return false;
+}
+
+static int SolicitarAnio(string mensaje)
+{
+    int anio;
+    while (true)
+    {
+        Console.Write(mensaje);
+        string entrada = Console.ReadLine();
+
+        if (int.TryParse(entrada, out anio))
+        {
+            return anio;
+        }
+        else
+        {
+            Console.WriteLine("Por favor, ingrese un año válido.");
+        }
+    }
+}
+
+static bool DeseaContinuar()
+{
+    while (true)
+    {
+        Console.WriteLine("¿Desea continuar? (S/N): ");
+        string respuesta = Console.ReadLine().Trim().ToUpper();
+
+        if (respuesta == "S")
+        {
+            
+            return true;
+        }
+        else if (respuesta == "N")
+        {
+            return false;
+        }
+        else
+        {
+            Console.WriteLine("Respuesta no válida. Por favor, ingrese 'S' para Sí o 'N' para No.");
+        }
+    }
 }
 
 Console.ReadKey();
